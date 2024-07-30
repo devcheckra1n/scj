@@ -15,6 +15,11 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
+// Add this block to handle the root URL
+app.get('/', (req, res) => {
+  res.send('Backend is working!');
+});
+
 app.use('/api/users', userRoutes);
 app.use('/api/playlists', playlistRoutes);
 
