@@ -11,11 +11,17 @@ app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true,  // Updated options
 });
 
-// Add this block to handle the root URL
+mongoose.connection.on('connected', () => {
+  console.log('Connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error(`Error connecting to MongoDB: ${err.message}`);
+});
+
 app.get('/', (req, res) => {
   res.send('Backend is working!');
 });
